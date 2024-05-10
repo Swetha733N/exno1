@@ -20,9 +20,7 @@ STEP 5: Remove outliers using IQR
 
 STEP 6: Use zscore of to remove outliers
 
-
-            
-# DATA CLEANING
+# Coding and Output
 ```
 import pandas as pd
 import numpy as np
@@ -30,15 +28,14 @@ import matplotlib.pyplot as plt
 data = pd.read_csv("/content/SAMPLEIDS.csv")
 data.head()
 ```
-![309139505-87017457-6bc6-447e-b68d-7ce0e74bfdeb](https://github.com/Swetha733N/exno1/assets/122199934/520e5a53-b701-435b-9262-64799b897163)
+
+![328031641-c3cfdaef-729a-4e01-987f-c07f055b6097](https://github.com/Swetha733N/exno1/assets/122199934/f7527b66-a5d9-4014-bb86-0fe39e9fdd49)
 
 
 ```
-data = pd.get_dummies(data)
 data.isnull().sum()
 ```
-![309139475-21080b5a-61e4-4afb-86c4-1784ed9ccad5](https://github.com/Swetha733N/exno1/assets/122199934/70f8484a-a9b8-4b12-b4d4-3fb22dd84e61)
-
+![328031654-07839fb5-b540-40da-8b00-37f26b1269df](https://github.com/Swetha733N/exno1/assets/122199934/95961173-c24a-4259-a2ca-35ae3aafc4c9)
 
 ```
 columns_with_null = data.columns[data.isnull().any()]
@@ -48,33 +45,40 @@ sns.barplot(columns_with_null)
 plt.title("NULL VALUES")
 plt.show()
 ```
-![309135329-c97ff983-bca5-401c-bad1-537b54cc593b](https://github.com/Swetha733N/exno1/assets/122199934/32ffd98f-5d53-4c46-ade4-e0020807dbd5)
+![328031663-b1edc442-94f5-44c1-80ba-110843e2d764](https://github.com/Swetha733N/exno1/assets/122199934/2590a6f6-bffc-4e8b-be7e-4773961ffdbd)
+
 
 ```
-for column in columns_with_null:
-    median = data[column].median()  
-    data[column].fillna(median, inplace=True)
+median = data[column].median()
+data[column].fillna(median, inplace=True)
 data.isnull().sum().sum()
 ```
-#IQR
+
+![328031682-97e8461a-8aa4-4218-9ca1-cefa64aaed70](https://github.com/Swetha733N/exno1/assets/122199934/3292ce83-2456-4824-8d15-893ea7223bd8)
+
+
 ```
 import pandas as pd
 import seaborn as sns
-ir = pd.read_csv("/content/iris (1).csv")
+ir = pd.read_csv("/content/iris.csv")
 ir.head()
 ```
-![309135437-e0ab58a3-f6c4-4150-9ec1-fc360883f213](https://github.com/Swetha733N/exno1/assets/122199934/04be29ee-8b9c-46b5-b758-2c6880b94206)
+
+![328031704-d166387a-6b8c-4980-bc26-b4f7903473fb](https://github.com/Swetha733N/exno1/assets/122199934/3a19592c-341d-42fc-8385-23a47468b587)
+
 
 ```
 ir.describe()
 ```
-![309135509-14c52f26-49d7-4773-a3dc-691df7888d24](https://github.com/Swetha733N/exno1/assets/122199934/7be54b9d-0487-492f-a0e9-7bdd9ac0033d)
 
+![328031722-2c53c970-ffe8-4999-adec-cc237c28c104](https://github.com/Swetha733N/exno1/assets/122199934/079ec807-4a1d-419d-8bf2-dff8d1af08ed)
 
 ```
 sns.boxplot(x='sepal_width',data=ir)
 ```
-![309135615-3b4d7891-2bb0-4c00-a5f4-02e0be6035f6](https://github.com/Swetha733N/exno1/assets/122199934/35a3dd78-1114-49e9-bd7e-24e4268a475b)
+
+![328031736-75e10a75-59c4-4cef-85c7-7806b61f5ac6](https://github.com/Swetha733N/exno1/assets/122199934/b93d3b38-3b56-43a9-b5f1-5048c3d340c0)
+
 
 ```
 c1=ir.sepal_width.quantile(0.25)
@@ -82,29 +86,32 @@ c3=ir.sepal_width.quantile(0.75)
 iq=c3-c1
 print(c3)
 ```
-![309135740-a525ca98-7554-4860-98cb-b417ec6f6de5](https://github.com/Swetha733N/exno1/assets/122199934/2db9cbc8-7c0a-4b4c-8bb2-e2bf8bf6c419)
+
+![328031759-b8780026-b359-470a-b38a-bf41876132bd](https://github.com/Swetha733N/exno1/assets/122199934/3200b1c5-c244-4da8-ae45-19fef275ac9a)
+
 
 ```
 rid=ir[((ir.sepal_width<(c1-1.5*iq))|(ir.sepal_width>(c3+1.5*iq)))]
 rid['sepal_width']
 ```
 
+![328031770-a30e69d4-2c6a-4dd4-b5ff-e05cba073877](https://github.com/Swetha733N/exno1/assets/122199934/baebdc1f-3e6f-4cf5-abf3-b4b9d0a3b2a1)
+
 
 ```
 delid=ir[~((ir.sepal_width<(c1-1.5*iq))|(ir.sepal_width>(c3+1.5*iq)))]
 delid
 ```
-![309135889-8985d070-d77f-4bd7-b9c5-b9f4860ca979](https://github.com/Swetha733N/exno1/assets/122199934/32164cf0-0698-4dcf-a07c-06dd80bdcefd)
+
+![328031790-fd3decd6-f88c-4918-804d-47e67ec47413](https://github.com/Swetha733N/exno1/assets/122199934/27bf6bbf-f5a7-40a8-82d7-9c3e0582d133)
 
 
 ```
 sns.boxplot(x='sepal_width',data=delid)
 ```
-![309135928-89bb915b-d491-42d2-b988-71cc15bd0a78](https://github.com/Swetha733N/exno1/assets/122199934/e5f848a4-9661-491d-987a-aa6d29bd8550)
+![328031802-d87bc370-90e3-496e-8f65-00537e7da6c3](https://github.com/Swetha733N/exno1/assets/122199934/091dae6c-ecf6-4c20-ab84-541e26278abd)
 
 
-
-# Z SCORE
 ```
 import matplotlib.pyplot as plt
 import pandas as pd
@@ -113,7 +120,8 @@ import scipy.stats as stats
 dataset=pd.read_csv("/content/heights.csv")
 dataset
 ```
-![309136004-827293f2-76d9-4d1c-a7a3-0c0ea93a0838](https://github.com/Swetha733N/exno1/assets/122199934/4cee25ac-5677-4c52-8866-f80378232e28)
+
+![328031814-854b68a0-eb20-4888-9e0f-f49b36c829a8](https://github.com/Swetha733N/exno1/assets/122199934/c2450932-e252-44ad-aa71-f20af49b4408)
 
 
 ```
@@ -121,35 +129,49 @@ df = pd.read_csv("heights.csv")
 q1 = df['height'].quantile(0.25)
 q2 = df['height'].quantile(0.5)
 q3 = df['height'].quantile(0.75)
+```
+
+```
 iqr = q3-q1
 iqr
 ```
-![309136004-827293f2-76d9-4d1c-a7a3-0c0ea93a0838](https://github.com/Swetha733N/exno1/assets/122199934/807ac824-2934-4cf5-8413-29ce1804c10a)
+
+![328031829-f00e0e01-b651-47de-9ed8-9a829f11ca91](https://github.com/Swetha733N/exno1/assets/122199934/90295f76-4e91-4805-b9ad-72b5a9791030)
+
 
 ```
 low = q1 - 1.5*iqr
 low
 ```
-![307661531-3f341bea-42c2-4cbd-928a-9e1fa576cfaf](https://github.com/aparnabalasubrmanian/exno1/assets/123351172/a62dd212-32e8-4f6e-a9bb-cd4e5be1c40e)
+![328031848-0982c2b2-066d-4a51-859e-504bbaf9aa90](https://github.com/Swetha733N/exno1/assets/122199934/8c1accdc-21ac-4862-8904-a4318759ad55)
+
 ```
 high = q3 + 1.5*iqr
 high
 ```
-![309136287-74bb2438-286d-417c-9a8f-7511df91f02e](https://github.com/Swetha733N/exno1/assets/122199934/b412f787-e239-4f33-a396-6c0a20781826)
+
+![328031867-46626b10-2a30-4ee4-92d2-ba5180ab1dd1](https://github.com/Swetha733N/exno1/assets/122199934/a75a8e88-1293-447f-a4c0-a8d0bc1338a2)
+
+
+```
+df.duplicated()
+```
+![328031912-55921ef3-d88a-4e42-993b-14f6eb97dd65](https://github.com/Swetha733N/exno1/assets/122199934/fdca7e7c-82bd-484f-a293-b6c6372716d5)
 
 ```
 df1 = df[((df['height'] >=low)& (df['height'] <=high))]
 df1
 ```
-![309136346-e14fa31d-adf2-4da4-aa7f-17beac6b0a1d](https://github.com/Swetha733N/exno1/assets/122199934/0cb37860-64df-46d5-9722-6889dcceb941)
+
+![328031927-793e3f4b-c4e7-43e7-bc82-1120d819cb04](https://github.com/Swetha733N/exno1/assets/122199934/aca781d7-28db-4b52-b6ff-c3704851b712)
+
 
 ```
 z = np.abs(stats.zscore(df['height']))
 z
 ```
-![309136397-0bbf349d-f89c-4069-b6dc-bfa65b58d8f1](https://github.com/Swetha733N/exno1/assets/122199934/70dc9fc9-483e-45f3-bcb0-84d54f131bce)
 
-
+![328031943-07ab8105-8d9c-49f7-b8f6-df8d966ba14b](https://github.com/Swetha733N/exno1/assets/122199934/1029b5ef-7d0f-4f66-a5f3-3e1614b92f97)
 
 # Result
-Thus the outliers are detected and removed in the given file and the final data set is saved into the file.       
+Thus the outliers are detected and removed in the given file and the final data set is saved into the file.
